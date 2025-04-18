@@ -1,0 +1,25 @@
+Source code.  All the commands used for insallation and setting up the wordpress instance.
+Since it was performed manually below are the only commands used for installation.  sudo yum update -y
+sudo yum install -y httpd
+sudo service httpd start
+sudo systemctl is-enabled httpd
+sudo systemctl enable httpd
+sudo amazon-linux-extras install mariadb10.5 -y
+sudo systemctl start mariadb
+sudo amazon-linux-extras install php8.2 -y
+wget https://wordpress.org/latest.tar.gz
+tar -xzf latest.tar.gz
+sudo cp -r wordpress/* /var/www/html/
+sudo usermod -a -G apache ec2-user
+exit
+sudo chown -R ec2-user:apache /var/www
+sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
+find /var/www -type f -exec sudo chmod 0664 {} \;
+cd /var/www/html
+cp wp-config-sample.php wp-config.php
+nano wp-config.php
+sudo vim /etc/httpd/conf/httpd.conf
+sudo systemctl restart httpd
+
+define('FS_METHOD', 'direct');  sudo yum install -y php-xml
+sudo systemctl restart php-fpm
