@@ -1,2 +1,13 @@
 # AWS-wordpress-project
-my frist aws project.done and submitted to simpl learn
+Project Agenda
+The goal of this project is to establish a WordPress hosting environment suitable for a global media company. The setup must include both a live instance for publishing blogs and a separate development instance for testing and updates. The live instance will be available 24/7, while the development instance will be restricted to business hours (9 AM - 6 PM IST). To optimize media management, AWS S3 will be integrated for efficient media storage, and AWS RDS will be used for database hosting to ensure data persistence. To further enhance efficiency, auto-scaling will be implemented to automatically start and stop instances based on a schedule. Additionally, AWS Route 53 will be configured to monitor the health of the WordPress instance to ensure consistent availability. The primary objectives of the project are as follows: • Deploy a live WordPress instance for blog publishing. • Deploy a separate WordPress instance for development and testing, restricted to business hours (9 AM - 6 PM IST). • Integrate AWS S3 for efficient media storage and management. • Utilize RDS for database hosting to ensure data persistence. • Implement auto-scaling for the EC2 instance to optimize usage. • Set up Route 53 for monitoring the health of the WordPress instance.
+
+Setting Up Auto Scaling
+
+To optimize resource usage, a custom Amazon Machine Image (AMI) is created from the configured WordPress instance. This AMI serves as the template for launching new instances during auto-scaling. A launch template is created using this AMI, followed by configuring an Auto Scaling group with a schedule that aligns with business hours. The desired capacity is set to 1 during active hours and 0 during off-hours, ensuring that the instance is only running when needed, thus reducing costs.
+
+• Create a custom AMI of the configured WordPress EC2 instance. • Set up a launch template with the custom AMI. • Create an Auto Scaling group with a schedule from 9:00 AM to 6:00 PM IST. • Configure the desired capacity to 1 during business hours and 0 otherwise.
+   
+Challenges and Mitigations
+One challenge is managing the complexity of IAM and security group configurations. This can be addressed by following AWS best practices and implementing strict policies. Additionally, scheduled downtime might trigger health check failures, which can be mitigated by configuring Route 53 to recognize the schedule. Ensuring data consistency is critical, and enabling automatic backups for RDS helps maintain data integrity. • Configuration Complexity: Setting up IAM and security groups can be daunting. To mitigate, use AWS best practices and policies. • Health Check Downtime Alerts: Scheduled instance downtime may trigger false health alerts. Proper configuration in Route 53 mitigates this. • Data Consistency: Configuring the RDS instance for automatic backups ensures data integrity.
+
